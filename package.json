@@ -2,6 +2,10 @@
   "name": "node_dashboard",
   "version": "0.0.0",
   "private": true,
+  "main":"views/index.html",
+  "window":{
+      "toolbar": false
+  },
   "scripts": {
     "start": "node ./bin/www"
   },

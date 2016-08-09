@@ -1,6 +1,26 @@
 body {
   padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 14px "Century Gothic", Helvetica, Arial, sans-serif;
+  background-image: url("../images/001.jpg");
+  background-size: cover;
+  color: #FFF;
+}
+
+#div_hour p {
+	text-align: center;
+	font-size: 48px;
+}
+
+#div_info{
+
+}
+
+#div_artist{
+	font-size: 30px;
+}
+
+#div_song{
+	font-size: 60px;
 }
 
 a {

@@ -12,7 +12,8 @@ body {
 }
 
 #div_info{
-
+	text-align: center;
+	margin-top: 90px;
 }
 
 #div_artist{
@@ -26,3 +27,27 @@ body {
 a {
   color: #00B7FF;
 }
+
+#div_progress{
+	width: inherit;
+	position: relative;
+}
+
+#div_progress_background {
+    border-radius: 25px;
+    background: #959595;
+    width: 100%;
+    height: 15px;
+    margin-top: 10px;
+    position: absolute;
+}
+
+#div_progress_foreground {
+    border-radius: 25px;
+    background: #FFF;
+    width: 30%;
+    height: 15px;
+    margin-top: 10px;
+    position: absolute;
+}
+

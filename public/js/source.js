@@ -1,7 +1,17 @@
 var dateFormat = require('dateformat');
-var now = new Date();
+
+function updateClock(){
+	var clockLabel = document.getElementById('div_hour');
+	var p = clockLabel.getElementsByTagName('p')[0];
+	var now = new Date();
+	p.innerHTML = dateFormat(now, "h:MM:ss");
+
+	console.log(clockLabel);
+	console.log(p);
+}
 
 window.onload = function(){
-	// Basic usage 
-	console.log(dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT"));
+	updateClock();
+
+	setInterval(updateClock, 1000);
 }

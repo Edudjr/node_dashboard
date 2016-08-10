@@ -2,12 +2,12 @@
   "name": "node_dashboard",
   "version": "0.0.0",
   "private": true,
-  "main":"views/index.html",
-  "window":{
-      "toolbar": false,
-      "height": 600,
-      "width": 1024,
-      "resizable": false
+  "main": "views/index.html",
+  "window": {
+    "toolbar": false,
+    "height": 600,
+    "width": 1024,
+    "resizable": false
   },
   "scripts": {
     "start": "node ./bin/www"
@@ -15,6 +15,7 @@
   "dependencies": {
     "body-parser": "~1.15.1",
     "cookie-parser": "~1.4.3",
+    "dateformat": "^1.0.12",
     "debug": "~2.2.0",
     "ejs": "^2.5.1",
     "express": "~4.13.4",

@@ -42,6 +42,10 @@ a {
     position: absolute;
 }
 
+#div_progress{
+  height: 30px;
+}
+
 #div_progress_foreground {
     border-radius: 25px;
     background: #FFF;
@@ -51,3 +55,24 @@ a {
     position: absolute;
 }
 
+#div_player {
+  margin-top: 20px;
+  text-align: center;
+}
+
+#div_player div{
+  display: inline-block;
+  height: 128px;
+  width: 128px;
+}
+
+#div_player div a{
+  display: inline-block;
+}
+
+#div_player #back{
+  float: left;
+}
+#div_player #next{
+  float: right;
+}

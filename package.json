@@ -4,7 +4,10 @@
   "private": true,
   "main":"views/index.html",
   "window":{
-      "toolbar": false
+      "toolbar": false,
+      "height": 600,
+      "width": 1024,
+      "resizable": false
   },
   "scripts": {
     "start": "node ./bin/www"

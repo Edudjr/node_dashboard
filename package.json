@@ -2,7 +2,8 @@
   "name": "node_dashboard",
   "version": "0.0.0",
   "private": true,
-  "main": "views/index.html",
+  "node-main": "./app.js",
+  "main": "http://localhost:3000",
   "window": {
     "toolbar": false,
     "height": 600,

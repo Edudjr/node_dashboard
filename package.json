@@ -4,6 +4,7 @@
   "private": true,
   "node-main": "./app.js",
   "main": "http://localhost:3000",
+  "node-remote": "http://localhost:3000",
   "window": {
     "toolbar": false,
     "height": 600,

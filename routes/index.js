@@ -39,6 +39,9 @@ function initMain(){
 	findAllFiles(folderPath, function(err, files){
 		if(err){return console.log(err)}
 		console.log(files);
+		findSongFiles(files, folderPath, function(files){
+			console.log(files);
+		});
 	});
 }
 

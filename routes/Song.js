@@ -1,4 +1,4 @@
-var Song = function(name, filePaht){
+var Song = function(name, filePath){
 	this.name = name;
 	this.filePath = filePath;
 }

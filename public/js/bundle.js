@@ -236,6 +236,19 @@ function updateClock(){
 	p.innerHTML = dateFormat(now, "h:MM");
 }
 
+function updateSong(){
+	$.get( "/update", function( data ) {
+		console.log(data);
+		var songDiv = document.getElementById('div_song');
+		var songP = songDiv.getElementsByTagName('p')[0];
+		songP.innerHTML = data.song;
+
+		var artistDiv = document.getElementById('div_artist');
+		var artistP = artistDiv.getElementsByTagName('p')[0];
+		artistP.innerHTML = data.artist;
+	});
+}
+
 function back(){
 	$.get( "/back", function( data ) {
 		console.log('Back');
@@ -254,6 +267,7 @@ function next(){
 
 window.onload = function(){
 	updateClock();
+	updateSong();
 
 	setInterval(updateClock, 60000);
 	$('#back_button').click(back);

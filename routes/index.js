@@ -89,4 +89,9 @@ router.get('/next', function(req, res, next) {
 	res.status(200).send('OK');
 });
 
+router.get('/update', function(req, res, next){
+	var index = Player.getSongIndex();
+	res.json(playlist[index]);
+});
+
 module.exports = router;

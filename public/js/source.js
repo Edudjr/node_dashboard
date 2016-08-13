@@ -5,6 +5,7 @@ function updateClock(){
 	var p = clockLabel.getElementsByTagName('p')[0];
 	var now = new Date();
 	p.innerHTML = dateFormat(now, "h:MM");
+	console.log('updateClock');
 }
 
 window.onload = function(){

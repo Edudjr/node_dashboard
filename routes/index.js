@@ -50,14 +50,14 @@ function initMain(){
 		});
 	});
 
-	Player.eventEmitter.on('back', function(){
+	Player.eventEmitter.on('back', function(index){
 		console.log('Event: Back');
 	});
 	Player.eventEmitter.on('play', function(index){
 		console.log('Event: Playing');
 		Socket.emitSong(playlist[index]);
 	});
-	Player.eventEmitter.on('next', function(){
+	Player.eventEmitter.on('next', function(index){
 		console.log('Event: Next');
 	});
 }

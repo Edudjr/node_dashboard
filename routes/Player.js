@@ -20,14 +20,12 @@ var playlist = [];
 
 exports.play = function(index){
     playH(index);
-    eventEmitter.emit('play', currentIndex);
 }
 exports.resume = function(){
     resumeH();
 }
 exports.pause = function(){
     pauseH();
-    eventEmitter.emit('pause');
 }
 exports.stop = function(){
     stopH();
@@ -37,14 +35,14 @@ exports.backward = function(){
     stopH();
     previous();
     playH();
-    eventEmitter.emit('back');
+    eventEmitter.emit('back', currentIndex);
 }
 
 exports.forward = function(){
     stopH();
     next();
     playH();
-    eventEmitter.emit('next');
+    eventEmitter.emit('next', currentIndex);
 } 
 
 exports.getState = function(){
@@ -106,13 +104,14 @@ function playH(index){
         next();
         playH(null);
     });
-
+    eventEmitter.emit('play', currentIndex);
 }
 
 function pauseH(){
     if(currentState != STATE.paused) {
 		stream.unpipe();
 		currentState = STATE.paused;
+        eventEmitter.emit('pause');
 	}
 }
 

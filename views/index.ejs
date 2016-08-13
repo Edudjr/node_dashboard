@@ -14,10 +14,16 @@
     <script src="/socket.io/socket.io.js"></script>
 	<script>
 		var socket = io.connect('http://localhost:3001');
-			socket.on('news', function (data) {
-				console.log(data);
-				socket.emit('my other event', { my: 'data' });
-			});
+		socket.on('play', function (data) {
+			console.log(data);
+			var songDiv = document.getElementById('div_song');
+			var songP = songDiv.getElementsByTagName('p')[0];
+			songP.innerHTML = data.song;
+
+			var artistDiv = document.getElementById('div_artist');
+			var artistP = artistDiv.getElementsByTagName('p')[0];
+			artistP.innerHTML = data.artist;
+		});
 	</script>
   </head>
   <body>

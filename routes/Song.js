@@ -13,7 +13,8 @@ Song.prototype.getMetaData = function(){
    
     if(artistMatch!=null){
     	artist = artistMatch[0];
-    	song = this.fullName.replace(artist, "");
+    	song = this.fullName.replace(artist, '');
+    	song = song.replace('.mp3', '');
     	artist = artist.slice(0, -1);
     }else{
     	artist = 'N/A';

@@ -10,7 +10,8 @@ var routes = require('./routes/index');
 var app = express();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
-var Socket = require('./routes/WebSocket')(io);
+var Socket = require('./routes/WebSocket');
+Socket.configure(io);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

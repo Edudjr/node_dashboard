@@ -6,6 +6,9 @@ var fs = require('fs');
 var folderPath = path.join(__dirname, '/../music/');
 var mime = require('mime');
 var Song = require('./Song');
+var Events = require('events');
+var EventEmitter = new Events.EventEmitter();
+var Socket = require('./WebSocket');
 var playlist = [];
 
 var songMimeTypes = [
@@ -38,10 +41,24 @@ function findAllFiles(folderPath, callback){
 function initMain(){
 	findAllFiles(folderPath, function(err, files){
 		if(err){return console.log(err)}
-		console.log(files);
 		findSongFiles(files, folderPath, function(files){
-			console.log(files);
+			//console.log(files);
+			files.forEach(function(item){
+				playlist.push(item);
+				Player.addToPlaylist(item.filePath);
+			});
 		});
+	});
+
+	Player.eventEmitter.on('back', function(){
+		console.log('Event: Back');
+	});
+	Player.eventEmitter.on('play', function(index){
+		console.log('Event: Playing');
+		Socket.emitSong(playlist[index]);
+	});
+	Player.eventEmitter.on('next', function(){
+		console.log('Event: Next');
 	});
 }
 
@@ -53,13 +70,11 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/back', function(req, res, next) {
-	console.log('BACK');
+	Player.backward();
+	res.status(200).send('OK');
 });
 
 router.get('/play', function(req, res, next) {
-	var songName = 'Eagles of Death Metal - Save A Prayer.mp3';
-	console.log(songName);
-	Player.addToPlaylist(path.join(__dirname, '/../music/'+songName));
 	Player.play();
 	res.status(200).send('OK');
 });
@@ -70,7 +85,7 @@ router.get('/pause', function(){
 });
 
 router.get('/next', function(req, res, next) {
-	player.next();
+	Player.forward();
 	res.status(200).send('OK');
 });
 

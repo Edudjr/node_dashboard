@@ -3,8 +3,8 @@ var router = express.Router();
 var fs = require('fs');
 var lame = require('lame');
 var Speaker = require('speaker');
-var EventEmitter = require("events").EventEmitter;
-//var audioMetaData = require('audio-metadata');
+var Events = require('events');
+var eventEmitter = new Events.EventEmitter();
 var currentIndex = 0;
 
 var STATE = {
@@ -18,15 +18,16 @@ var lastMusic = null;
 var currentState = STATE.stopped;
 var playlist = [];   
 
-
 exports.play = function(index){
     playH(index);
+    eventEmitter.emit('play', currentIndex);
 }
 exports.resume = function(){
     resumeH();
 }
 exports.pause = function(){
     pauseH();
+    eventEmitter.emit('pause');
 }
 exports.stop = function(){
     stopH();
@@ -36,12 +37,14 @@ exports.backward = function(){
     stopH();
     previous();
     playH();
+    eventEmitter.emit('back');
 }
 
 exports.forward = function(){
     stopH();
     next();
     playH();
+    eventEmitter.emit('next');
 } 
 
 exports.getState = function(){
@@ -56,52 +59,22 @@ exports.addToPlaylist = function(file){
     playlist.push(file);
 }
 
-//NAO EH IDEAL - USAR REGEX
-exports.getMetadata = function(audio){
-    //var audioData = fs.readFileSync(audio);
-    //var metadata = audioMetaData.id3v2(audioData);
-
-    //console.log(metadata);
-    //var getInfo = "(?=Alt-J).*(?=.mp3)";
-    //var title = "[^/]*(?= -)";
-    //var song = "(?=- )(.*)?()"; //FIX IT
-
-    //get rid of path - [^/]*.mp3
-    //get (title)(song) - ^([^-]+) - (.*).mp3
-
-    var data = {};
-    var artistReg = '/.*-';
-    var artist = audio.match(artistReg);
-    var song = artist.replace(artist, "");
-    artist = artist.slice(0, -1);
-    console.log(artist);
-    console.log(song);
-    
-    // //if regex worked, get title and song names
-    // if (match != null){
-    //     var tempFinal = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i);
-    //     if(tempFinal != null && tempFinal[1] && tempFinal[2]){
-    //         tempTitle = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i)[1];
-    //         tempSong = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i)[2];
-    //     }else{
-    //         console.log(audio);
-    //     }
-    // }
-
-    // data.title = tempTitle ?  tempTitle : tempNoPath;
-    // data.song = tempSong ? tempSong : tempNoPath;
-
-    // return data;
-}
+exports.eventEmitter = eventEmitter;
 
 function playH(index){
     //if index is null, play from playlist. If both null, return
-	if (!index || (typeof index ==='undefined')){ 
+	if (index == null){ 
         index = currentIndex;
     }else{
         if(index < playlist.length)
             currentIndex = index;
     }
+
+    //return if playlist is empty
+    if(!playlist.length){
+        return;
+    }
+
     var file = playlist[index];
     console.log("playing: " + file);
 	//if playing, stop current stream

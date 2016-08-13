@@ -61,14 +61,17 @@ router.get('/play', function(req, res, next) {
 	console.log(songName);
 	Player.addToPlaylist(path.join(__dirname, '/../music/'+songName));
 	Player.play();
+	res.status(200).send('OK');
 });
 
 router.get('/pause', function(){
 	Player.pause();
+	res.status(200).send('OK');
 });
 
 router.get('/next', function(req, res, next) {
 	player.next();
+	res.status(200).send('OK');
 });
 
 module.exports = router;

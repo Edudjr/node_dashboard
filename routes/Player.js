@@ -70,25 +70,28 @@ exports.getMetadata = function(audio){
     //get (title)(song) - ^([^-]+) - (.*).mp3
 
     var data = {};
-    var tempNoPath = audio.match(/[^\/]*.mp3/i);
-    var tempTitle = "";
-    var tempSong = "";
+    var artistReg = '/.*-';
+    var artist = audio.match(artistReg);
+    var song = artist.replace(artist, "");
+    artist = artist.slice(0, -1);
+    console.log(artist);
+    console.log(song);
     
-    //if regex worked, get title and song names
-    if (tempNoPath != null){
-        var tempFinal = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i);
-        if(tempFinal != null && tempFinal[1] && tempFinal[2]){
-            tempTitle = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i)[1];
-            tempSong = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i)[2];
-        }else{
-            console.log(audio);
-        }
-    }
+    // //if regex worked, get title and song names
+    // if (match != null){
+    //     var tempFinal = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i);
+    //     if(tempFinal != null && tempFinal[1] && tempFinal[2]){
+    //         tempTitle = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i)[1];
+    //         tempSong = tempNoPath[0].match(/^([^-]+) - (.*).mp3/i)[2];
+    //     }else{
+    //         console.log(audio);
+    //     }
+    // }
 
-    data.title = tempTitle ?  tempTitle : tempNoPath;
-    data.song = tempSong ? tempSong : tempNoPath;
+    // data.title = tempTitle ?  tempTitle : tempNoPath;
+    // data.song = tempSong ? tempSong : tempNoPath;
 
-    return data;
+    // return data;
 }
 
 function playH(index){

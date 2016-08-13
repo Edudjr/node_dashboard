@@ -236,9 +236,16 @@ function updateClock(){
 	p.innerHTML = dateFormat(now, "h:MM");
 }
 
+function play(){
+	$.get( "/play", function( data ) {
+		console.log(data);
+	});
+}
+
 window.onload = function(){
 	updateClock();
 
 	setInterval(updateClock, 60000);
+	$('#play_button').click(play);
 }
 },{"dateformat":1}]},{},[2]);

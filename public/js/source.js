@@ -36,11 +36,20 @@ function next(){
 	});
 }
 
+function blinkClock(){
+	var clockLabel = document.getElementById('div_hour');
+	var p = clockLabel.getElementsByTagName('p')[0];
+	var text = p.innerHTML;
+	var hidden = text.indexOf(':') == -1 ? true : false;
+	p.innerHTML = !hidden ? text.replace(':',' ') : text.replace(' ', ':');
+}
+
 window.onload = function(){
 	updateClock();
 	updateSong();
 
 	setInterval(updateClock, 60000);
+	setInterval(blinkClock, 1000);
 	$('#back_button').click(back);
 	$('#play_button').click(play);
 	$('#next_button').click(next);

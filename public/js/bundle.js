@@ -282,5 +282,6 @@ window.onload = function(){
 	$('#back_button').click(back);
 	$('#play_button').click(play);
 	$('#next_button').click(next);
+	$('img').on('dragstart', function(event) { event.preventDefault(); });
 }
 },{"dateformat":1}]},{},[2]);

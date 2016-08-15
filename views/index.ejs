@@ -72,7 +72,10 @@
 
 		function updateProgressBar(){
 			var percent = elapsedSeconds * 100 / durationInSeconds;
-			$('#div_progress_foreground').css('width',percent+'%');
+			//$('#div_progress_foreground').css('width',percent+'%');
+			$('#div_progress_foreground').animate({
+	            width: percent+'%'
+	        }, 1000 );
 		}
 	</script>
   </head>

@@ -15,6 +15,15 @@ var songMimeTypes = [
     'audio/mpeg'
 ];
 
+var backgroundImageIndex = 0;
+var host = 'http://localhost:3001/images/'
+var backgroundImages = [
+	'001.jpg',
+	'002.jpg',
+	'003.jpg',
+	'004.jpg'
+];
+
 function findSongFiles (files, folderPath, callback) {
     var songsList = [];
     files.forEach(function (file) {
@@ -38,6 +47,15 @@ function findAllFiles(folderPath, callback){
 	});
 }
 
+function backgroundImageTransition(){
+	if(backgroundImageIndex < backgroundImages.length-1){
+		backgroundImageIndex++;
+	}else{
+		backgroundImageIndex = 0;
+	}
+	Socket.emitBackgroundTransition(host+backgroundImages[backgroundImageIndex]);
+}
+
 function initMain(){
 	findAllFiles(folderPath, function(err, files){
 		if(err){return console.log(err)}
@@ -49,7 +67,10 @@ function initMain(){
 			});
 		});
 	});
+	//Change background every X time
+	setInterval(backgroundImageTransition, 30000);
 
+	//Player events
 	Player.eventEmitter.on('back', function(index){
 		console.log('Event: Back');
 	});

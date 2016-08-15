@@ -4,6 +4,14 @@ body {
   background-image: url("../images/001.jpg");
   background-size: cover;
   color: #FFF;
+  height: 100%;   /* ges Hoehe der Seite -> weitere Hoehenangaben werden relativ hierzu ausgewertet */
+  overflow: hidden;   /*  hide scrollbars */
+  opacity: 1.0;
+  -webkit-transition: background 1.5s linear;
+  -moz-transition: background 1.5s linear;
+  -o-transition: background 1.5s linear;
+  -ms-transition: background 1.5s linear;
+  transition: background 1.5s linear;
 }
 
 #div_hour p {

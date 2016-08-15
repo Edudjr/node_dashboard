@@ -24,6 +24,10 @@
 			var artistP = artistDiv.getElementsByTagName('p')[0];
 			artistP.innerHTML = data.artist;
 		});
+
+		socket.on('backgroundTransition', function(data){
+			$(document.body).css({"background-image": "url("+data+")"});
+		});
 	</script>
   </head>
   <body>

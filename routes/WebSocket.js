@@ -12,5 +12,9 @@ module.exports = {
 
 	emitSong: function(song) {
 		this.io.emit('play', song);
+	},
+
+	emitBackgroundTransition: function(url){
+		this.io.emit('backgroundTransition', url);
 	}
 }

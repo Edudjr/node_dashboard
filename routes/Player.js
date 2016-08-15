@@ -4,8 +4,16 @@ var fs = require('fs');
 var lame = require('lame');
 var Speaker = require('speaker');
 var Events = require('events');
+var mp3 = require('mp3-duration');
 var eventEmitter = new Events.EventEmitter();
 var currentIndex = 0;
+var interval = null;
+var currentSongDuration = {
+    seconds: 0,
+    remainingSeconds: 0,
+    formatted: "",
+    remainingFormatted: ""
+};
 
 var STATE = {
     playing : 0,
@@ -57,6 +65,14 @@ exports.addToPlaylist = function(file){
     playlist.push(file);
 }
 
+exports.getDuration = function(){
+    return currentSongDuration.formatted;
+}
+
+exports.getRemainingDuration = function(){
+    return currentSongDuration.remainingFormatted;
+}
+
 exports.eventEmitter = eventEmitter;
 
 function playH(index){
@@ -95,8 +111,14 @@ function playH(index){
 	//stream = fs.createReadStream(file).pipe(new lame.Decoder).pipe(new Speaker());
 	stream = fs.createReadStream(file).pipe(new lame.Decoder);
 
-	//pipe to speaker
-	stream.pipe(new Speaker());
+	//get duration and pipe to speaker
+	
+    mp3(playlist[index], function (err, duration) {
+      if (err) return console.log(err.message);
+      setCurrentSongDuration(duration);
+      stream.pipe(new Speaker());
+      eventEmitter.emit('play', currentIndex);
+    });
 
 
     stream.on('finish',function(){
@@ -104,7 +126,29 @@ function playH(index){
         next();
         playH(null);
     });
-    eventEmitter.emit('play', currentIndex);
+}
+
+function formatDuration(duration){
+    var minutes = Math.floor(duration / 60);
+    var seconds = Math.floor(duration - minutes * 60);
+    var formatted = (minutes+':'+seconds);
+    return formatted;
+}
+
+function durationCountdown(){
+    currentSongDuration.remainingSeconds -= 1;
+    currentSongDuration.remainingFormatted = formatDuration(currentSongDuration.remainingSeconds);
+    eventEmitter.emit('duration', currentSongDuration);
+}
+
+function setCurrentSongDuration(duration){
+    currentSongDuration.seconds = duration;
+    currentSongDuration.formatted = formatDuration(duration);
+    currentSongDuration.remainingSeconds = duration;
+    setCurrentSongDuration.remainingFormatted = formatDuration(duration);
+
+    if(interval) clearInterval(interval);
+      interval = setInterval(durationCountdown, 1000);
 }
 
 function pauseH(){

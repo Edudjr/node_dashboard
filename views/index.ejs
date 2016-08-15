@@ -13,21 +13,58 @@
     <link rel='stylesheet' href='stylesheets/style.css' />
     <script src="/socket.io/socket.io.js"></script>
 	<script>
+		var interval = null;
+		var elapsedSeconds = 0;
 		var socket = io.connect('http://localhost:3001');
 		socket.on('play', function (data) {
 			console.log(data);
+			//SONG
 			var songDiv = document.getElementById('div_song');
 			var songP = songDiv.getElementsByTagName('p')[0];
 			songP.innerHTML = data.song;
 
+			//ARTIST
 			var artistDiv = document.getElementById('div_artist');
 			var artistP = artistDiv.getElementsByTagName('p')[0];
 			artistP.innerHTML = data.artist;
+
+			resetElapsedTime();
 		});
 
 		socket.on('backgroundTransition', function(data){
 			$(document.body).css({"background-image": "url("+data+")"});
 		});
+
+		function resetElapsedTime(){
+			if(interval) {
+				clearInterval(interval);
+				elapsedSeconds = 0;
+			}
+			interval = setInterval(updateElapsedTime, 1000);
+		}
+
+		function updateElapsedTime(){
+			//ELAPSED
+			var elapsedDiv = document.getElementById('div_elapsed');
+			var elapsedP = elapsedDiv.getElementsByTagName('p')[0];
+			elapsedSeconds += 1;
+			elapsedP.innerHTML = formatDuration(elapsedSeconds);
+		}
+
+		function formatDuration(duration){
+			var minutes = null;
+			var seconds = null;
+			if(duration >= 60){
+				minutes = Math.floor(duration / 60);
+		    	seconds = Math.floor(duration - minutes * 60);
+			}else{
+				minutes = 0;
+				seconds = duration;
+			}
+		   
+		    var formatted = (minutes+':'+seconds);
+		    return formatted;
+		}
 	</script>
   </head>
   <body>

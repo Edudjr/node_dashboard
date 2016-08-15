@@ -76,7 +76,12 @@ function initMain(){
 	});
 	Player.eventEmitter.on('play', function(index){
 		console.log('Event: Playing');
-		Socket.emitSong(playlist[index]);
+		var json = {
+			song: playlist[index].song,
+			artist: playlist[index].artist,
+			duration: Player.getDuration()
+		}
+		Socket.emitSong(json);
 	});
 	Player.eventEmitter.on('next', function(index){
 		console.log('Event: Next');

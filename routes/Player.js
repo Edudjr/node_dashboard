@@ -69,6 +69,10 @@ exports.getDuration = function(){
     return currentSongDuration.formatted;
 }
 
+exports.getDurationInSeconds = function(){
+    return currentSongDuration.seconds;
+}
+
 exports.getRemainingDuration = function(){
     return currentSongDuration.remainingFormatted;
 }

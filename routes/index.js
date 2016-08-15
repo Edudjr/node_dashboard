@@ -79,7 +79,8 @@ function initMain(){
 		var json = {
 			song: playlist[index].song,
 			artist: playlist[index].artist,
-			duration: Player.getDuration()
+			duration: Player.getDuration(),
+			durationInSeconds: Player.getDurationInSeconds()
 		}
 		Socket.emitSong(json);
 	});
@@ -92,7 +93,8 @@ initMain();
 
 
 router.get('/', function(req, res, next) {
-  res.render('index', {title:'Teste'});
+	Player.stop();
+  	res.render('index', {title:'Teste'});
 });
 
 router.get('/back', function(req, res, next) {

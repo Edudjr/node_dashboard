@@ -67,7 +67,7 @@ function initMain(){
 			});
 		});
 	});
-	//Change background every X time
+	//Change background every X miliseconds
 	setInterval(backgroundImageTransition, 30000);
 
 	//Player events
